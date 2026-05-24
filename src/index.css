@@ -1,0 +1,16 @@
+﻿@import "tailwindcss";
+
+@theme {
+  --color-brand: #3AAFA9;
+  --color-nav-bg: #17252A;
+  --color-btn-prime: #2B7A78;
+  --color-hover-prime: #3AAFA9;
+  --color-section-light: #DEF2F1;
+  --color-heading: #17252A;
+  --color-app-bg: #FEFFFF;
+}
+
+body {
+  background-color: var(--color-app-bg);
+  color: #2d3748;
+}

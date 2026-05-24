@@ -1,0 +1,9 @@
+﻿- [x] Verify that the copilot-instructions.md file in the .github directory is created.
+- [x] Clarify Project Requirements
+- [x] Scaffold the Project (Frontend with Vite React)
+- [x] Customize the Project (Configured Tailwind, folders layout, Axios, Router)
+- [x] Install Required Extensions (None mandated)
+- [x] Compile the Project
+- [x] Create and Run Task (Skipped)
+- [x] Launch the Project (Can be run via npm run dev)
+- [x] Ensure Documentation is Complete (README updated)
