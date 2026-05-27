@@ -1,14 +1,29 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { registerUser } from '../services/apiService';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthContext';
 
 const Register = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const { register, googleLogin } = useAuth();
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleGoogleSuccess = async () => {
+    try {
+      await googleLogin();
+      toast.success('Successfully logged in with Google!');
+      navigate('/');
+    } catch (err) {
+      console.error('Google login error:', err);
+      toast.error('Google Login Error.');
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -21,13 +36,9 @@ const Register = () => {
     setError('');
     
     try {
-      // Direct integration with backend API
-      const response = await registerUser({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password
-      });
-      console.log('Register success:', response);
+      await register(formData.name, formData.email, formData.password);
+      toast.success('Registration Successful!');
+      navigate('/');
       alert('Registration Successful! (Testing alert)');
     } catch (err) {
       console.error('Register error:', err);
@@ -51,6 +62,21 @@ const Register = () => {
             {error}
           </div>
         )}
+
+        <button 
+          type="button"
+          onClick={handleGoogleSuccess}
+          className="w-full flex items-center justify-center bg-white border border-slate-300 text-slate-700 px-6 py-3 rounded-sm font-bold shadow-sm hover:bg-slate-50 hover:shadow transition-all duration-300 mb-6"
+        >
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5 mr-3" />
+          Sign up with Google
+        </button>
+        
+        <div className="flex items-center my-6">
+          <div className="flex-grow border-t border-slate-200"></div>
+          <span className="flex-shrink-0 mx-4 text-slate-400 text-xs font-bold uppercase">Or register with email</span>
+          <div className="flex-grow border-t border-slate-200"></div>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>

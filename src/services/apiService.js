@@ -1,6 +1,6 @@
 import api from '../utils/axios';
 
-// Example endpoints that you can use once the backend is ready
+// API Endpoints using VITE_API_BASE_URL from .env
 
 export const getProducts = async () => {
     try {
@@ -33,6 +33,15 @@ export const loginUser = async (credentials) => {
 export const registerUser = async (userData) => {
     try {
         const response = await api.post('/auth/register', userData);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const googleLoginUser = async (tokenId) => {
+    try {
+        const response = await api.post('/auth/google', { token: tokenId });
         return response.data;
     } catch (error) {
         throw error;

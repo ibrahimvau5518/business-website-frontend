@@ -1,14 +1,29 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { loginUser } from '../services/apiService';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  
+  const { login, googleLogin } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleGoogleSuccess = async () => {
+    try {
+      await googleLogin();
+      toast.success('Successfully logged in with Google!');
+      navigate('/');
+    } catch (err) {
+      console.error('Google login error:', err);
+      toast.error('Google Login Error.');
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -17,15 +32,12 @@ const Login = () => {
     setError('');
     
     try {
-      // Direct integration with backend API
-      const response = await loginUser(formData);
-      console.log('Login success:', response);
-      // Here you would typically save the token & user details to Context/Redux
-      alert('Login Successful! (Testing alert)');
+      await login(formData.email, formData.password);
+      toast.success('Login Successful!');
+      navigate('/');
     } catch (err) {
       console.error('Login error:', err);
-      // Because we lack a running backend, mock an error
-      setError('Invalid credentials or backend server is not running.');
+      setError(err.message || 'Invalid credentials.');
     } finally {
       setLoading(false);
     }
@@ -44,6 +56,21 @@ const Login = () => {
             {error}
           </div>
         )}
+
+        <button 
+          type="button"
+          onClick={handleGoogleSuccess}
+          className="w-full flex items-center justify-center bg-white border border-slate-300 text-slate-700 px-6 py-3 rounded-sm font-bold shadow-sm hover:bg-slate-50 hover:shadow transition-all duration-300 mb-6"
+        >
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5 mr-3" />
+          Sign in with Google
+        </button>
+        
+        <div className="flex items-center my-6">
+          <div className="flex-grow border-t border-slate-200"></div>
+          <span className="flex-shrink-0 mx-4 text-slate-400 text-xs font-bold uppercase">Or login with email</span>
+          <div className="flex-grow border-t border-slate-200"></div>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

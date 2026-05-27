@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
 
 const navLinks = [
   { title: 'Home', path: '/' },
@@ -14,6 +15,8 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,9 +74,25 @@ const Navbar = () => {
                 {link.title}
               </NavLink>
             ))}
-            <NavLink to="/login" className="bg-btn-prime hover:bg-hover-prime text-section-light hover:text-white px-6 py-2.5 rounded-sm font-bold uppercase text-sm tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 shadow-md hover:shadow-brand/30">
-              Login
-            </NavLink>
+            
+            {user ? (
+               <div className="flex items-center space-x-4">
+                 {(user.email === import.meta.env.VITE_ADMIN_EMAIL || user.email === 'admin@gmail.com') && (
+                   <NavLink to="/admin" className="text-sm font-bold uppercase tracking-wider text-brand hover:text-white transition-colors duration-200">
+                     Dashboard
+                   </NavLink>
+                 )}
+                 <span className={`text-sm font-bold ${isScrolled ? 'text-gray-200' : 'text-slate-800'}`}>Hi, {user.name?.split(' ')[0] || 'User'}</span>
+                 <button onClick={() => { logout(); navigate('/'); }} className="bg-red-500 hover:bg-red-600 text-white px-6 py-2.5 rounded-sm font-bold uppercase text-sm tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 shadow-md hover:shadow-red-500/30">
+                   Logout
+                 </button>
+               </div>
+            ) : (
+              <NavLink to="/login" className="bg-btn-prime hover:bg-hover-prime text-section-light hover:text-white px-6 py-2.5 rounded-sm font-bold uppercase text-sm tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 shadow-md hover:shadow-brand/30">
+                Login
+              </NavLink>
+            )}
+            
           </div>
 
           {/* Mobile Menu Button */}
@@ -123,9 +142,15 @@ const Navbar = () => {
                 </NavLink>
               ))}
               <div className="pt-6 flex flex-col space-y-3">
-                <NavLink to="/login" className="w-full text-center bg-btn-prime hover:bg-hover-prime text-white px-6 py-3 rounded-sm font-bold uppercase text-sm tracking-widest transition-colors duration-300 shadow-md">
-                  Login
-                </NavLink>
+                {user ? (
+                   <button onClick={() => { logout(); setIsOpen(false); navigate('/'); }} className="w-full text-center bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-sm font-bold uppercase text-sm tracking-widest transition-colors duration-300 shadow-md">
+                     Logout ({user.name?.split(' ')[0] || 'User'})
+                   </button>
+                ) : (
+                  <NavLink to="/login" className="w-full text-center bg-btn-prime hover:bg-hover-prime text-white px-6 py-3 rounded-sm font-bold uppercase text-sm tracking-widest transition-colors duration-300 shadow-md">
+                    Login
+                  </NavLink>
+                )}
               </div>
             </div>
           </motion.div>

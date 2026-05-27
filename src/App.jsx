@@ -1,5 +1,7 @@
 ﻿import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import BannerSlider from './components/BannerSlider';
 import ProductSection from './components/ProductSection';
@@ -13,16 +15,19 @@ import Register from './pages/Register';
 import Services from './pages/Services';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen flex flex-col bg-app-bg text-heading font-sans">
-        <Navbar />
-        
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={
+    <AuthProvider>
+      <Router>
+        <Toaster position="top-right" />
+        <div className="min-h-screen flex flex-col bg-app-bg text-heading font-sans">
+          <Navbar />
+            
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={
               <div className="flex flex-col items-center bg-app-bg">
                 <BannerSlider />
                 
@@ -45,12 +50,14 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </main>
         
         <Footer />
       </div>
     </Router>
+    </AuthProvider>
   );
 }
 
