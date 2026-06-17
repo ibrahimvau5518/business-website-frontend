@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
+import { buildReturnPath } from '../utils/authRedirect';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -15,8 +16,9 @@ const Login = () => {
   const [searchParams] = useSearchParams();
 
   const isAdminLogin = searchParams.get('redirect') === '/admin' || location.state?.adminRequired;
-  const redirectTo = searchParams.get('redirect') || location.state?.from?.pathname || '/';
+  const redirectTo = searchParams.get('redirect') || buildReturnPath(location.state?.from);
   const forbiddenAccess = searchParams.get('forbidden') === 'admin';
+  const authMessage = location.state?.message;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -80,6 +82,12 @@ const Login = () => {
         {forbiddenAccess && (
           <div className="bg-amber-50 text-amber-800 p-4 rounded-sm border border-amber-100 text-sm mb-6">
             Admin access is required for that page.
+          </div>
+        )}
+
+        {authMessage && (
+          <div className="bg-blue-50 text-blue-800 p-4 rounded-sm border border-blue-100 text-sm mb-6">
+            {authMessage}
           </div>
         )}
 
@@ -186,7 +194,11 @@ const Login = () => {
           ) : (
             <>
               Don&apos;t have an account?{' '}
-              <Link to="/register" className="text-brand hover:text-slate-900 font-bold uppercase transition-colors">
+              <Link
+                to="/register"
+                state={{ from: location.state?.from, message: authMessage }}
+                className="text-brand hover:text-slate-900 font-bold uppercase transition-colors"
+              >
                 Create an account
               </Link>
             </>

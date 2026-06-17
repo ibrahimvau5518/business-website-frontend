@@ -4,6 +4,7 @@ import { getProducts } from '../services/apiService';
 import { getProductImage, isOutOfStock, formatProductPrice } from '../utils/productHelpers';
 import OutOfStockBadge from '../components/OutOfStockBadge';
 import ProductBuyButton from '../components/ProductBuyButton';
+import ProtectedProductLink from '../components/ProtectedProductLink';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -91,9 +92,9 @@ const Products = () => {
                   )}
                 </div>
                 <div className="p-6 flex-grow flex flex-col">
-                  <Link to={`/products/${product._id}`} className="block">
+                  <ProtectedProductLink productId={product._id} className="block">
                     <h3 className="text-lg font-bold text-heading mb-2 leading-tight hover:text-brand transition-colors">{product.name}</h3>
-                  </Link>
+                  </ProtectedProductLink>
                   <p className="text-slate-500 mb-6 text-sm flex-grow line-clamp-3">{product.description}</p>
 
                   <div className="mt-auto">

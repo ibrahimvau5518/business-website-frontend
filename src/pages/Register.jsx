@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
+import { buildReturnPath } from '../utils/authRedirect';
 
 const Register = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
@@ -10,6 +11,17 @@ const Register = () => {
 
   const { register, googleLogin } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const returnTo = buildReturnPath(location.state?.from);
+  const authMessage = location.state?.message;
+
+  const redirectAfterAuth = (authData) => {
+    if (authData?.user?.role === 'admin') {
+      navigate('/admin', { replace: true });
+      return;
+    }
+    navigate(returnTo, { replace: true });
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,9 +29,9 @@ const Register = () => {
 
   const handleGoogleSuccess = async () => {
     try {
-      await googleLogin();
+      const authData = await googleLogin();
       toast.success('Successfully logged in with Google!');
-      navigate('/');
+      redirectAfterAuth(authData);
     } catch {
       toast.error('Google Login Error.');
     }
@@ -35,9 +47,9 @@ const Register = () => {
     setError('');
     
     try {
-      await register(formData.name, formData.email, formData.password);
+      const authData = await register(formData.name, formData.email, formData.password);
       toast.success('Registration Successful!');
-      navigate('/');
+      redirectAfterAuth(authData);
     } catch (err) {
       setError(err.message || 'Registration failed. Please try again.');
     } finally {
@@ -52,6 +64,12 @@ const Register = () => {
           <h1 className="text-3xl font-black uppercase text-heading tracking-tight mb-2">Create Account</h1>
           <p className="text-slate-500">Join us to manage your orders</p>
         </div>
+
+        {authMessage && (
+          <div className="bg-blue-50 text-blue-800 p-4 rounded-sm border border-blue-100 text-sm mb-6">
+            {authMessage}
+          </div>
+        )}
 
         {error && (
           <div className="bg-red-50 text-red-600 p-4 rounded-sm border border-red-100 text-sm mb-6">
@@ -152,7 +170,11 @@ const Register = () => {
 
         <div className="mt-8 text-center text-sm text-slate-600 font-medium">
           Already have an account?{' '}
-          <Link to="/login" className="text-brand hover:text-slate-900 font-bold uppercase transition-colors">
+          <Link
+            to="/login"
+            state={{ from: location.state?.from, message: authMessage }}
+            className="text-brand hover:text-slate-900 font-bold uppercase transition-colors"
+          >
             Sign In
           </Link>
         </div>

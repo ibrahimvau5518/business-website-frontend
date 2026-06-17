@@ -57,12 +57,13 @@ export const createOrder = async (data) => {
 };
 
 export const getOrders = async () => {
-    try {
-        const response = await api.get('/orders');
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    const response = await api.get('/orders');
+    return response.data;
+};
+
+export const getUserOrders = async () => {
+    const response = await api.get('/orders/user');
+    return response.data;
 };
 
 export const updateOrderStatus = async (orderId, status) => {

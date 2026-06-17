@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import AdminRoute from './components/AdminRoute';
+import ProtectedRoute from './components/ProtectedRoute';
+import ProductIdRedirect from './components/ProductIdRedirect';
 import Navbar from './components/Navbar';
 import BannerSlider from './components/BannerSlider';
 import ProductSection from './components/ProductSection';
@@ -19,6 +21,7 @@ import Contact from './pages/Contact';
 import Checkout from './pages/Checkout';
 import ProductDetails from './pages/ProductDetails';
 import AdminDashboard from './pages/AdminDashboard';
+import Orders from './pages/Orders';
 
 function App() {
   return (
@@ -49,10 +52,28 @@ function App() {
             } />
             <Route path="/services" element={<Services />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/products/:productId" element={<ProductDetails />} />
+            <Route
+              path="/products/:productId"
+              element={<ProtectedRoute><ProductDetails /></ProtectedRoute>}
+            />
+            <Route
+              path="/product/:id"
+              element={<ProtectedRoute><ProductIdRedirect /></ProtectedRoute>}
+            />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/checkout/:productId" element={<Checkout />} />
+            <Route
+              path="/checkout/:productId"
+              element={<ProtectedRoute><Checkout /></ProtectedRoute>}
+            />
+            <Route
+              path="/payment/:productId"
+              element={<ProtectedRoute><Checkout /></ProtectedRoute>}
+            />
+            <Route
+              path="/orders"
+              element={<ProtectedRoute><Orders /></ProtectedRoute>}
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />

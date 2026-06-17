@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { getProducts, createOrder } from '../services/apiService';
 import {
   getProductImage,
@@ -21,6 +22,7 @@ const Checkout = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuth();
   const [product, setProduct] = useState(location.state?.product || null);
   const [quantity, setQuantity] = useState(location.state?.quantity || 1);
   const [dimensions, setDimensions] = useState(location.state?.dimensions || null);
@@ -35,6 +37,12 @@ const Checkout = () => {
     address: '',
     transactionId: '',
   });
+
+  useEffect(() => {
+    if (user?.name) {
+      setFormData((prev) => (prev.name ? prev : { ...prev, name: user.name }));
+    }
+  }, [user?.name]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -89,6 +97,10 @@ const Checkout = () => {
       setStatus('success');
     } catch (err) {
       setStatus('error');
+      if (err.response?.status === 401) {
+        setErrorMessage('Your session has expired. Please log in again to place your order.');
+        return;
+      }
       setErrorMessage(
         err.response?.data?.message || 'Failed to place order. Please try again.'
       );
