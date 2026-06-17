@@ -16,7 +16,7 @@ import {
 } from '../utils/productHelpers';
 import OutOfStockBadge from '../components/OutOfStockBadge';
 
-const BKASH_NUMBER = import.meta.env.VITE_BKASH_NUMBER || '01712345678';
+const BKASH_NUMBER = import.meta.env.VITE_BKASH_NUMBER || '01827195518';
 
 const Checkout = () => {
   const { productId } = useParams();
