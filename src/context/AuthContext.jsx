@@ -9,8 +9,6 @@ import {
   updateProfile
 } from 'firebase/auth';
 import { auth } from '../firebase';
-import api from '../utils/axios';
-
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
@@ -28,13 +26,8 @@ export const AuthProvider = ({ children }) => {
           email: currentUser.email,
           photoURL: currentUser.photoURL
         });
-        
-        // Optional: Get the Firebase token to authenticate API calls to your Vercel backend
-        const token = await currentUser.getIdToken();
-        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       } else {
         setUser(null);
-        delete api.defaults.headers.common['Authorization'];
       }
       setLoading(false);
     });

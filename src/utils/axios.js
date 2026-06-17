@@ -1,37 +1,39 @@
-﻿import axios from 'axios';
+import axios from 'axios';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api',
+  timeout: 60000,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Request Interceptor
 api.interceptors.request.use(
   (config) => {
-    // Tumi pore ekhane localStorage theke token niye auth header e add korte parbe
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   config.headers.Authorization = `Bearer \${token}`;
-    // }
+    const adminToken = localStorage.getItem('adminToken');
+    if (adminToken) {
+      config.headers.Authorization = `Bearer ${adminToken}`;
+    }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Response Interceptor
 api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
-    // Ekhane global error handling kora jabe (jsmn 401 unauthorized hole logout hoye jabe)
-    if (error.response && error.response.status === 401) {
-      console.log('Unauthorized API calls or Session Expired');
+    const status = error.response?.status;
+    const hadAdminToken = !!localStorage.getItem('adminToken');
+
+    if ((status === 401 || status === 403) && hadAdminToken) {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminUser');
+
+      if (window.location.pathname.startsWith('/admin')) {
+        window.location.href = '/login?redirect=/admin';
+      }
     }
+
     return Promise.reject(error);
   }
 );

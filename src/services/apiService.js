@@ -11,9 +11,72 @@ export const getProducts = async () => {
     }
 };
 
+export const createProduct = async (data) => {
+    try {
+        const response = await api.post('/products', data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const updateProduct = async (productId, data) => {
+    try {
+        const response = await api.patch(`/products/${productId}`, data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const deleteProduct = async (productId) => {
+    try {
+        const response = await api.delete(`/products/${productId}`);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const createContactMessage = async (data) => {
     try {
         const response = await api.post('/contacts', data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const createOrder = async (data) => {
+    try {
+        const response = await api.post('/orders', data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getOrders = async () => {
+    try {
+        const response = await api.get('/orders');
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const updateOrderStatus = async (orderId, status) => {
+    try {
+        const response = await api.patch(`/orders/${orderId}`, { status });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const adminLogin = async (credentials) => {
+    try {
+        const response = await api.post('/auth/login', credentials);
         return response.data;
     } catch (error) {
         throw error;

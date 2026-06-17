@@ -20,8 +20,7 @@ const Register = () => {
       await googleLogin();
       toast.success('Successfully logged in with Google!');
       navigate('/');
-    } catch (err) {
-      console.error('Google login error:', err);
+    } catch {
       toast.error('Google Login Error.');
     }
   };
@@ -39,11 +38,8 @@ const Register = () => {
       await register(formData.name, formData.email, formData.password);
       toast.success('Registration Successful!');
       navigate('/');
-      alert('Registration Successful! (Testing alert)');
     } catch (err) {
-      console.error('Register error:', err);
-      // Because we lack a running backend, mock an error
-      setError('Registration failed. Backend server might not be running.');
+      setError(err.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }

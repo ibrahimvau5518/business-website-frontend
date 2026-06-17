@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createContactMessage } from '../services/apiService';
+import { CONTACT_INFO } from '../constants/contactInfo';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
@@ -24,10 +25,7 @@ const Contact = () => {
       setStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
-      console.error('Contact error:', err);
-      // Simulate success for frontend preview since backend is offline
-      setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setStatus('error');
     } finally {
       setLoading(false);
     }
@@ -55,6 +53,12 @@ const Contact = () => {
             {status === 'success' && (
               <div className="bg-green-50 text-green-700 p-4 rounded-sm border border-green-100 mb-6">
                 Thank you! Your message has been successfully sent. We will get back to you shortly.
+              </div>
+            )}
+
+            {status === 'error' && (
+              <div className="bg-red-50 text-red-700 p-4 rounded-sm border border-red-100 mb-6">
+                Failed to send your message. Please try again or contact us directly by phone or email.
               </div>
             )}
 
@@ -139,8 +143,11 @@ const Contact = () => {
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg mb-1">Our Headquarters</h3>
-                    <p className="text-slate-400 leading-relaxed text-sm">123 Industrial Ave, Business Park<br/>New York, NY 10012, USA</p>
+                    <h3 className="font-bold text-lg mb-1">Our Location</h3>
+                    <p className="text-slate-400 leading-relaxed text-sm">
+                      {CONTACT_INFO.address.line1}<br />
+                      {CONTACT_INFO.address.line2}
+                    </p>
                   </div>
                 </li>
                 
@@ -150,8 +157,16 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-lg mb-1">Phone Number</h3>
-                    <p className="text-slate-400 text-sm mb-1">+1 (555) 123-4567</p>
-                    <p className="text-slate-500 text-xs">Mon - Fri, 8am to 6pm EST</p>
+                    {CONTACT_INFO.phones.map((phone) => (
+                      <a
+                        key={phone}
+                        href={`tel:+88${phone}`}
+                        className="block text-slate-400 text-sm mb-1 hover:text-brand transition-colors"
+                      >
+                        {phone}
+                      </a>
+                    ))}
+                    <p className="text-slate-500 text-xs">Call us anytime during business hours</p>
                   </div>
                 </li>
 
@@ -161,7 +176,12 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-bold text-lg mb-1">Email Address</h3>
-                    <p className="text-slate-400 text-sm mb-1">support@craneparts.com</p>
+                    <a
+                      href={`mailto:${CONTACT_INFO.email}`}
+                      className="text-slate-400 text-sm mb-1 hover:text-brand transition-colors block"
+                    >
+                      {CONTACT_INFO.email}
+                    </a>
                     <p className="text-slate-500 text-xs">Drop us a line anytime!</p>
                   </div>
                 </li>
