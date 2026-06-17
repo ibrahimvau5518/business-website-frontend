@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const CallToAction = () => {
   return (
-    <section className="relative w-full bg-slate-900 py-24 px-4 overflow-hidden">
+    <section className="relative w-full bg-slate-900 py-12 sm:py-16 md:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden min-w-0">
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-30" 
@@ -11,12 +11,12 @@ const CallToAction = () => {
       ></div>
       <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/90 to-transparent"></div>
       
-      <div className="relative max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
-        <div className="md:w-2/3 mb-10 md:mb-0 z-10">
-          <h2 className="text-3xl md:text-5xl font-black uppercase text-white tracking-tight mb-6">
+      <div className="relative max-w-7xl mx-auto w-full min-w-0 flex flex-col md:flex-row items-center justify-between">
+        <div className="md:w-2/3 mb-8 md:mb-0 z-10 min-w-0 w-full">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase text-white tracking-tight mb-4 sm:mb-6">
             Ready to Upgrade Your <span className="text-brand">Industrial Equipment?</span>
           </h2>
-          <p className="text-lg text-slate-300 max-w-2xl leading-relaxed mb-8">
+          <p className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed mb-6 sm:mb-8">
             Whether you need a custom sized tarpaulin or heavy-duty crane parts distributed to your site globally, our team is standing by to deliver premium solutions.
           </p>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">

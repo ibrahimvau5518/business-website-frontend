@@ -4,15 +4,15 @@ import { CONTACT_INFO } from '../constants/contactInfo';
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-900 text-slate-300 py-16 font-sans border-t-4 border-brand">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+    <footer className="bg-slate-900 text-slate-300 py-12 sm:py-16 font-sans border-t-4 border-brand w-full min-w-0 overflow-x-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full min-w-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 lg:gap-8">
           
           {/* Brand & About */}
           <div className="space-y-6">
-            <Link to="/" className="flex items-center space-x-3">
-              <img src="https://i.ibb.co.com/WvftM2PT/0cf3a8dc-3aca-48a2-b51d-1419aa33f4a5.jpg" alt="Crane Parts & Tarpaulin Logo" className="h-12 md:h-14 w-auto rounded-md shadow-sm" />
-              <div className="text-xl md:text-2xl font-black tracking-tighter uppercase inline-block">
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <img src="https://i.ibb.co.com/WvftM2PT/0cf3a8dc-3aca-48a2-b51d-1419aa33f4a5.jpg" alt="Crane Parts & Tarpaulin Logo" className="h-10 sm:h-12 md:h-14 w-auto rounded-md shadow-sm flex-shrink-0" />
+              <div className="text-lg sm:text-xl md:text-2xl font-black tracking-tighter uppercase min-w-0 leading-tight">
                 <span className="text-white">Crane Parts &</span>
                 <span className="text-brand"> Tarpaulin</span>
               </div>
@@ -115,16 +115,16 @@ const Footer = () => {
               Subscribe to receive latest updates and special offers directly to your inbox.
             </p>
             <form className="mt-2" onSubmit={(e) => e.preventDefault()}>
-              <div className="relative">
+              <div className="flex flex-col sm:relative gap-2 sm:gap-0">
                 <input 
                   type="email" 
                   placeholder="Enter your email" 
-                  className="w-full bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-sm focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
+                  className="w-full min-w-0 bg-slate-800 border border-slate-700 text-white px-4 py-3 sm:pr-28 rounded-sm focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
                   required
                 />
                 <button 
                   type="submit" 
-                  className="absolute right-1 top-1 bottom-1 bg-brand hover:bg-[#2b9690] text-white px-4 rounded-sm font-bold uppercase text-sm transition-colors flex items-center"
+                  className="w-full sm:w-auto sm:absolute sm:right-1 sm:top-1 sm:bottom-1 bg-brand hover:bg-[#2b9690] text-white px-4 py-2.5 sm:py-0 rounded-sm font-bold uppercase text-sm transition-colors flex items-center justify-center"
                 >
                   <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />

@@ -14,9 +14,9 @@ const QuantitySelector = ({ quantity, onChange, min = 1, max = 99, disabled = fa
   };
 
   return (
-    <div className="flex items-center gap-3">
-      <span className="text-sm font-bold text-slate-700 uppercase tracking-wide">Quantity</span>
-      <div className="flex items-center border border-slate-200 rounded-sm overflow-hidden bg-white">
+    <div className="flex flex-wrap items-center gap-3 min-w-0">
+      <span className="text-sm font-bold text-slate-700 uppercase tracking-wide w-full sm:w-auto">Quantity</span>
+      <div className="flex items-center border border-slate-200 rounded-sm overflow-hidden bg-white shrink-0">
         <button
           type="button"
           onClick={decrease}

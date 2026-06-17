@@ -46,25 +46,25 @@ const Services = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-app-bg pt-32 pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="page-shell bg-app-bg">
+      <div className="page-container">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-black uppercase text-heading tracking-tight mb-4">Our Services</h1>
+        <div className="text-center mb-10 sm:mb-16">
+          <h1 className="section-heading mb-4">Our Services</h1>
           <div className="w-24 h-1.5 bg-brand mx-auto rounded"></div>
-          <p className="mt-6 text-slate-600 max-w-2xl mx-auto text-lg">
+          <p className="mt-4 sm:mt-6 text-slate-600 max-w-2xl mx-auto text-base sm:text-lg px-2">
             We provide comprehensive industrial solutions, ranging from custom fabrications to premium parts sourcing, built for durability and performance.
           </p>
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 min-w-0">
           {servicesList.map((service, index) => (
-            <div key={index} className="bg-white p-8 rounded-lg shadow-sm border border-slate-100 hover:shadow-xl hover:border-brand/30 transition-all duration-300 group">
+            <div key={index} className="form-card hover:shadow-xl hover:border-brand/30 transition-all duration-300 group">
               <div className="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mb-6 group-hover:bg-brand/10 transition-colors duration-300">
                 {service.icon}
               </div>
-              <h3 className="text-2xl font-bold text-heading mb-4">{service.title}</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-heading mb-3 sm:mb-4">{service.title}</h3>
               <p className="text-slate-600 leading-relaxed">
                 {service.description}
               </p>
@@ -73,9 +73,9 @@ const Services = () => {
         </div>
 
         {/* Call to Action */}
-        <div className="mt-20 bg-slate-900 rounded-lg p-12 text-center shadow-lg">
-          <h2 className="text-3xl font-bold text-white mb-6">Need a Custom Solution?</h2>
-          <p className="text-slate-400 mb-8 max-w-2xl mx-auto text-lg">
+        <div className="mt-12 sm:mt-20 bg-slate-900 rounded-lg p-6 sm:p-10 lg:p-12 text-center shadow-lg min-w-0">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6">Need a Custom Solution?</h2>
+          <p className="text-slate-400 mb-6 sm:mb-8 max-w-2xl mx-auto text-base sm:text-lg px-2">
             Our engineering team is ready to analyze your requirements and provide bespoke tarpaulin sizes or locate hard-to-find crane components.
           </p>
           <a href="/contact" className="inline-block bg-brand hover:bg-[#2b9690] text-white px-8 py-4 rounded-sm font-bold uppercase tracking-widest transition-colors duration-300 shadow-md">

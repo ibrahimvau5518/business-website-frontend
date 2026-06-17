@@ -8,7 +8,7 @@ const TarpaulinSizeInputs = ({ length, width, onChange, disabled = false }) => {
   return (
     <div className="space-y-4">
       <p className="text-sm font-bold text-slate-700 uppercase tracking-wide">Custom Size (feet)</p>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 min-w-0">
         <div>
           <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2" htmlFor="length">
             Length (ft)

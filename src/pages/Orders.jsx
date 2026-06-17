@@ -50,10 +50,10 @@ const Orders = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-app-bg pt-32 pb-16">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-black uppercase text-heading tracking-tight mb-4">My Orders</h1>
+    <div className="page-shell bg-app-bg">
+      <div className="page-container max-w-5xl">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="section-heading mb-4">My Orders</h1>
           <div className="w-24 h-1.5 bg-brand mx-auto rounded mb-4" />
           <p className="text-slate-600">
             Hi {user?.name?.split(' ')[0] || 'there'}, here is your order history.
@@ -92,10 +92,10 @@ const Orders = () => {
               const statusStyle = STATUS_STYLES[status] || 'bg-slate-100 text-slate-600 border-slate-200';
 
               return (
-                <div key={order._id} className="bg-white p-6 rounded-lg shadow-sm border border-slate-100">
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
-                    <div>
-                      <h2 className="text-lg font-bold text-heading">{order.productName}</h2>
+                <div key={order._id} className="form-card">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4 min-w-0">
+                    <div className="min-w-0">
+                      <h2 className="text-base sm:text-lg font-bold text-heading break-words">{order.productName}</h2>
                       {formatOrderLineDetails(order) && (
                         <p className="text-sm text-slate-500 mt-1">{formatOrderLineDetails(order)}</p>
                       )}
@@ -105,12 +105,12 @@ const Orders = () => {
                       {status}
                     </span>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-slate-100">
-                    <div className="text-sm text-slate-600">
-                      <p>Txn: <span className="font-mono text-slate-800">{order.transactionId}</span></p>
-                      <p className="mt-1">Deliver to: {order.address}</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-slate-100 min-w-0">
+                    <div className="text-sm text-slate-600 min-w-0">
+                      <p className="break-all">Txn: <span className="font-mono text-slate-800">{order.transactionId}</span></p>
+                      <p className="mt-1 break-words">Deliver to: {order.address}</p>
                     </div>
-                    <p className="text-2xl font-black text-heading">৳{Number(order.price).toFixed(2)}</p>
+                    <p className="text-xl sm:text-2xl font-black text-heading shrink-0">৳{Number(order.price).toFixed(2)}</p>
                   </div>
                 </div>
               );

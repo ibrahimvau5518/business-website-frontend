@@ -57,10 +57,10 @@ const EditProductModal = ({ product, onClose, onSave, saving }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
-      <div className="bg-white rounded-lg shadow-xl border border-slate-100 w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <div className="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
-          <h3 className="text-lg font-bold uppercase tracking-wide text-heading">Edit Product</h3>
+    <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="edit-product-title">
+      <div className="modal-panel">
+        <div className="p-4 sm:p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center sticky top-0 z-10">
+          <h3 id="edit-product-title" className="text-base sm:text-lg font-bold uppercase tracking-wide text-heading">Edit Product</h3>
           <button
             type="button"
             onClick={onClose}
@@ -71,7 +71,7 @@ const EditProductModal = ({ product, onClose, onSave, saving }) => {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-5">
           <div>
             <label className="block text-sm font-bold text-slate-700 uppercase mb-2" htmlFor="edit-name">
               Name
@@ -104,18 +104,18 @@ const EditProductModal = ({ product, onClose, onSave, saving }) => {
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2.5 rounded-sm font-bold uppercase text-sm text-slate-600 hover:bg-slate-100 transition-colors"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-sm font-bold uppercase text-sm text-slate-600 hover:bg-slate-100 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className={`px-6 py-2.5 rounded-sm font-bold uppercase text-sm text-white transition-colors ${
+              className={`w-full sm:w-auto px-6 py-2.5 rounded-sm font-bold uppercase text-sm text-white transition-colors ${
                 saving ? 'bg-slate-400 cursor-not-allowed' : 'bg-brand hover:bg-[#2b9690]'
               }`}
             >
@@ -244,8 +244,8 @@ const AdminProductManagement = () => {
 
   return (
     <div className="bg-white rounded-md shadow-sm border border-slate-100 overflow-hidden">
-      <div className="p-6 border-b border-slate-100 bg-slate-50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h2 className="text-xl font-bold uppercase tracking-wide">Product Management</h2>
+      <div className="p-4 sm:p-6 border-b border-slate-100 bg-slate-50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h2 className="text-lg sm:text-xl font-bold uppercase tracking-wide">Product Management</h2>
         <button
           onClick={fetchProducts}
           disabled={loading}
@@ -286,7 +286,7 @@ const AdminProductManagement = () => {
 
       {!loading && !error && products.length > 0 && (
         <>
-          <div className="hidden md:block overflow-x-auto">
+          <div className="hidden md:block table-scroll">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200">

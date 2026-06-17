@@ -28,17 +28,17 @@ function App() {
     <AuthProvider>
       <Router>
         <Toaster position="top-right" />
-        <div className="min-h-screen flex flex-col bg-app-bg text-heading font-sans">
+        <div className="min-h-screen flex flex-col bg-app-bg text-heading font-sans overflow-x-hidden w-full">
           <Navbar />
             
-            <main className="flex-grow">
+            <main className="flex-grow w-full min-w-0 overflow-x-hidden">
               <Routes>
                 <Route path="/" element={
               <div className="flex flex-col items-center bg-app-bg">
                 <BannerSlider />
                 
-                <div className="flex flex-col items-center pt-20 mb-8 space-y-8 px-4 w-full">
-                  <h1 className="text-4xl md:text-5xl font-black text-heading tracking-tight uppercase text-center">Equipment You Can Trust</h1>
+                <div className="flex flex-col items-center pt-12 sm:pt-16 md:pt-20 mb-6 sm:mb-8 space-y-6 sm:space-y-8 px-4 w-full max-w-5xl">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-heading tracking-tight uppercase text-center">Equipment You Can Trust</h1>
                   <div className="w-16 h-2 bg-brand rounded mt-8"></div>
                 </div>
 

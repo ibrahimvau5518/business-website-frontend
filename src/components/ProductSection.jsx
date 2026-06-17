@@ -27,9 +27,9 @@ const ProductSection = () => {
   }, []);
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 py-16">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-black uppercase text-heading tracking-tight mb-4">Our Featured Products</h2>
+    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 min-w-0">
+      <div className="text-center mb-8 sm:mb-12">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase text-heading tracking-tight mb-4">Our Featured Products</h2>
         <div className="w-24 h-1.5 bg-brand mx-auto rounded"></div>
         <p className="mt-4 text-slate-600 max-w-2xl mx-auto">
           Browse our top-quality selection of crane parts and tarpaulin products.
@@ -61,17 +61,17 @@ const ProductSection = () => {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 min-w-0">
           {products.map((product) => {
             const outOfStock = isOutOfStock(product);
             return (
             <div
               key={product._id}
-              className={`bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group ${
+              className={`bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group min-w-0 flex flex-col ${
                 outOfStock ? 'opacity-90' : ''
               }`}
             >
-              <div className="relative h-64 overflow-hidden bg-slate-50 flex items-center justify-center p-4">
+              <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden bg-slate-50 flex items-center justify-center p-4">
                 <img
                   src={getProductImage(product)}
                   alt={product.name}
@@ -88,16 +88,16 @@ const ProductSection = () => {
                   </div>
                 )}
               </div>
-              <div className="p-6">
-                <ProtectedProductLink productId={product._id}>
-                  <h3 className="text-xl font-bold text-heading mb-2 hover:text-brand transition-colors">{product.name}</h3>
+              <div className="p-4 sm:p-6 flex flex-col flex-grow min-w-0">
+                <ProtectedProductLink productId={product._id} className="min-w-0">
+                  <h3 className="text-lg sm:text-xl font-bold text-heading mb-2 hover:text-brand transition-colors break-words">{product.name}</h3>
                 </ProtectedProductLink>
-                <p className="text-slate-600 mb-4 h-16 overflow-hidden text-sm leading-relaxed">{product.description}</p>
-                <div className="flex items-center justify-between mt-4 border-t border-gray-100 pt-4">
-                  <span className="text-2xl font-black text-heading">{formatProductPrice(product)}</span>
+                <p className="text-slate-600 mb-4 line-clamp-3 text-sm leading-relaxed flex-grow">{product.description}</p>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-auto border-t border-gray-100 pt-4 min-w-0">
+                  <span className="text-xl sm:text-2xl font-black text-heading break-words">{formatProductPrice(product)}</span>
                   <ProductBuyButton
                     product={product}
-                    className="px-5 py-2 rounded text-sm tracking-wide"
+                    className="w-full sm:w-auto px-5 py-2.5 rounded text-sm tracking-wide text-center"
                   />
                 </div>
               </div>
@@ -107,8 +107,8 @@ const ProductSection = () => {
         </div>
       )}
 
-      <div className="flex justify-center mt-12">
-        <Link to="/products" className="bg-brand hover:bg-[#2b9690] text-white px-10 py-4 rounded-sm font-bold uppercase tracking-widest transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2">
+      <div className="flex justify-center mt-8 sm:mt-12 px-2">
+        <Link to="/products" className="w-full sm:w-auto text-center bg-brand hover:bg-[#2b9690] text-white px-8 sm:px-10 py-3.5 sm:py-4 rounded-sm font-bold uppercase tracking-widest transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2">
           View All Products
         </Link>
       </div>

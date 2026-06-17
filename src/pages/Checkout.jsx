@@ -111,7 +111,7 @@ const Checkout = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-app-bg pt-32 pb-16 flex justify-center items-center">
+      <div className="page-shell bg-app-bg flex justify-center items-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-brand"></div>
       </div>
     );
@@ -119,8 +119,8 @@ const Checkout = () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-app-bg pt-32 pb-16">
-        <div className="max-w-2xl mx-auto px-4 text-center">
+      <div className="page-shell bg-app-bg">
+        <div className="page-container max-w-2xl text-center">
           <h1 className="text-3xl font-black uppercase text-heading mb-4">Product Not Found</h1>
           <p className="text-slate-600 mb-8">The product you are trying to checkout does not exist.</p>
           <Link
@@ -151,9 +151,9 @@ const Checkout = () => {
 
   if (isTarpaulin && !isValidTarpaulinDimensions(dimensions?.length, dimensions?.width)) {
     return (
-      <div className="min-h-screen bg-app-bg pt-32 pb-16">
-        <div className="max-w-2xl mx-auto px-4 text-center">
-          <h1 className="text-3xl font-black uppercase text-heading mb-4">Size Required</h1>
+      <div className="page-shell bg-app-bg">
+        <div className="page-container max-w-2xl text-center">
+          <h1 className="text-2xl sm:text-3xl font-black uppercase text-heading mb-4">Size Required</h1>
           <p className="text-slate-600 mb-8">
             Please enter custom length and width on the product page before checkout.
           </p>
@@ -170,9 +170,9 @@ const Checkout = () => {
 
   if (isOutOfStock(product)) {
     return (
-      <div className="min-h-screen bg-app-bg pt-32 pb-16">
-        <div className="max-w-2xl mx-auto px-4 text-center">
-          <div className="bg-white p-8 md:p-12 rounded-lg shadow-sm border border-slate-100">
+      <div className="page-shell bg-app-bg">
+        <div className="page-container max-w-2xl text-center">
+          <div className="form-card md:p-12">
             <OutOfStockBadge className="mb-6 text-sm px-4 py-2" />
             <h1 className="text-3xl font-black uppercase text-heading mb-4">Product Unavailable</h1>
             <p className="text-slate-600 mb-2">
@@ -193,9 +193,9 @@ const Checkout = () => {
 
   if (status === 'success') {
     return (
-      <div className="min-h-screen bg-app-bg pt-32 pb-16">
-        <div className="max-w-2xl mx-auto px-4">
-          <div className="bg-white p-8 md:p-12 rounded-lg shadow-sm border border-slate-100 text-center">
+      <div className="page-shell bg-app-bg">
+        <div className="page-container max-w-2xl">
+          <div className="form-card md:p-12 text-center">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
@@ -237,35 +237,35 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-app-bg pt-32 pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-black uppercase text-heading tracking-tight mb-4">
+    <div className="page-shell">
+      <div className="page-container">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase text-heading tracking-tight mb-4">
             Checkout
           </h1>
           <div className="w-24 h-1.5 bg-brand mx-auto rounded"></div>
-          <p className="mt-6 text-slate-600 max-w-2xl mx-auto text-lg">
+          <p className="mt-4 sm:mt-6 text-slate-600 max-w-2xl mx-auto text-base sm:text-lg px-2">
             Complete your purchase via bKash manual payment.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className="space-y-8">
-            <div className="bg-white p-8 rounded-lg shadow-sm border border-slate-100">
-              <h2 className="text-xl font-bold text-heading mb-6 uppercase tracking-wide">Order Summary</h2>
-              <div className="flex gap-6">
-                <div className="w-28 h-28 bg-slate-50 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center p-2 border border-slate-100">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
+          <div className="space-y-6 sm:space-y-8 min-w-0">
+            <div className="form-card">
+              <h2 className="text-lg sm:text-xl font-bold text-heading mb-4 sm:mb-6 uppercase tracking-wide">Order Summary</h2>
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 min-w-0">
+                <div className="w-full sm:w-28 h-40 sm:h-28 bg-slate-50 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center p-2 border border-slate-100 mx-auto sm:mx-0">
                   <img
                     src={getProductImage(product)}
                     alt={product.name}
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <div className="flex-grow">
+                <div className="flex-grow min-w-0 w-full">
                   <p className="text-xs font-bold text-brand uppercase tracking-wide mb-1">
                     {getProductCategory(product)}
                   </p>
-                  <h3 className="text-lg font-bold text-heading mb-2">{product.name}</h3>
+                  <h3 className="text-base sm:text-lg font-bold text-heading mb-2 break-words">{product.name}</h3>
                   <p className="text-slate-500 text-sm mb-4 line-clamp-2">{product.description}</p>
                   <div className="text-sm text-slate-500 mb-3 space-y-1">
                     {isTarpaulin && tarpaulinBreakdown && (
@@ -288,7 +288,7 @@ const Checkout = () => {
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
                       Total
                     </p>
-                    <div className="text-3xl font-black text-heading">
+                    <div className="text-2xl sm:text-3xl font-black text-heading break-words">
                       ৳{totalPrice.toFixed(2)}
                     </div>
                   </div>
@@ -296,7 +296,7 @@ const Checkout = () => {
               </div>
             </div>
 
-            <div className="bg-[#E2136E] text-white p-8 rounded-lg shadow-lg">
+            <div className="bg-[#E2136E] text-white p-4 sm:p-6 md:p-8 rounded-lg shadow-lg min-w-0">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center font-black text-lg">
                   b
@@ -308,7 +308,7 @@ const Checkout = () => {
               </p>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
                 <p className="text-white/70 text-xs font-bold uppercase tracking-widest mb-2">bKash Number</p>
-                <p className="text-3xl font-black tracking-wider">{BKASH_NUMBER}</p>
+                <p className="text-2xl sm:text-3xl font-black tracking-wider break-all">{BKASH_NUMBER}</p>
                 <p className="text-white/80 text-sm mt-4">
                   Amount to send: <span className="font-bold text-white">৳{totalPrice.toFixed(2)}</span>
                 </p>
@@ -330,8 +330,8 @@ const Checkout = () => {
             </div>
           </div>
 
-          <div className="bg-white p-8 md:p-12 rounded-lg shadow-sm border border-slate-100">
-            <h2 className="text-2xl font-bold text-heading mb-6 uppercase tracking-wide">
+          <div className="form-card md:p-10 lg:p-12">
+            <h2 className="text-xl sm:text-2xl font-bold text-heading mb-4 sm:mb-6 uppercase tracking-wide">
               Delivery & Payment Details
             </h2>
 

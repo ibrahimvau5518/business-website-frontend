@@ -58,10 +58,10 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-app-bg pt-32 pb-16 flex items-center justify-center">
-      <div className="max-w-md w-full mx-4 bg-white p-8 rounded-lg shadow-lg border border-slate-100">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl font-black uppercase text-heading tracking-tight mb-2">Create Account</h1>
+    <div className="auth-shell bg-app-bg">
+      <div className="form-card max-w-md shadow-lg">
+        <div className="text-center mb-8 sm:mb-10">
+          <h1 className="text-2xl sm:text-3xl font-black uppercase text-heading tracking-tight mb-2">Create Account</h1>
           <p className="text-slate-500">Join us to manage your orders</p>
         </div>
 

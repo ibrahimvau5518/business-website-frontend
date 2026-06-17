@@ -41,16 +41,16 @@ const features = [
 
 const Features = () => {
   return (
-    <section className="w-full bg-slate-900 py-20 px-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-black uppercase text-white tracking-tight mb-4">Why Partner With Us?</h2>
+    <section className="w-full bg-slate-900 py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 min-w-0 overflow-x-hidden">
+      <div className="max-w-7xl mx-auto w-full min-w-0">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase text-white tracking-tight mb-4">Why Partner With Us?</h2>
           <div className="w-24 h-1.5 bg-brand mx-auto rounded"></div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 min-w-0">
           {features.map((feature, index) => (
-            <div key={index} className="bg-slate-800 p-8 rounded-lg text-center hover:-translate-y-2 transition-transform duration-300">
+            <div key={index} className="bg-slate-800 p-6 sm:p-8 rounded-lg text-center hover:-translate-y-2 transition-transform duration-300 min-w-0">
               <div className="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-6">
                 {feature.icon}
               </div>

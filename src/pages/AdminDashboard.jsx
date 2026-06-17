@@ -255,25 +255,39 @@ const AdminDashboard = () => {
 
   const pendingCount = orders.filter((o) => o.status === 'pending').length;
 
+  const tabs = [
+    { id: 'orders', label: `Orders (${orders.length || '…'})` },
+    { id: 'products', label: `Products (${products.length})` },
+    { id: 'add', label: 'Add Product' },
+  ];
+
+  const tabButtonClass = (tabId) =>
+    `flex-shrink-0 px-4 py-2.5 rounded-sm font-bold uppercase text-xs sm:text-sm whitespace-nowrap transition-colors ${
+      activeTab === tabId
+        ? 'bg-brand text-white shadow-sm'
+        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
+    }`;
+
   return (
-    <div className="max-w-7xl mx-auto px-4 pt-32 pb-16 min-h-screen">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
-        <div>
-          <h1 className="text-3xl md:text-4xl font-black text-heading uppercase tracking-tight">
+    <div className="page-shell">
+      <div className="page-container min-h-screen">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 sm:mb-8 lg:mb-10 gap-4 min-w-0">
+        <div className="min-w-0 w-full lg:w-auto">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-heading uppercase tracking-tight">
             Admin Dashboard
           </h1>
-          <p className="text-slate-500 mt-2">
+          <p className="text-slate-500 mt-2 text-sm sm:text-base truncate">
             Logged in as <span className="font-semibold text-heading">{user?.email}</span>
           </p>
         </div>
-        <div className="flex flex-col items-start md:items-end gap-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto">
           {activeTab === 'orders' && !ordersLoading && !ordersError && (
-            <div className="flex gap-3 text-sm">
-              <span className="bg-white border border-slate-200 px-4 py-2 rounded-sm font-semibold text-slate-700">
-                Total Orders: <span className="text-brand">{orders.length}</span>
+            <div className="flex flex-wrap gap-2 sm:gap-3 text-xs sm:text-sm">
+              <span className="bg-white border border-slate-200 px-3 sm:px-4 py-2 rounded-sm font-semibold text-slate-700">
+                Total: <span className="text-brand">{orders.length}</span>
               </span>
               {pendingCount > 0 && (
-                <span className="bg-yellow-50 border border-yellow-200 px-4 py-2 rounded-sm font-semibold text-yellow-800">
+                <span className="bg-yellow-50 border border-yellow-200 px-3 sm:px-4 py-2 rounded-sm font-semibold text-yellow-800">
                   Pending: {pendingCount}
                 </span>
               )}
@@ -281,60 +295,49 @@ const AdminDashboard = () => {
           )}
           <button
             onClick={handleAdminLogout}
-            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2.5 rounded-sm font-bold uppercase text-sm tracking-wider transition-colors"
+            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2.5 rounded-sm font-bold uppercase text-sm tracking-wider transition-colors w-full sm:w-auto"
           >
             Logout
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div className="bg-white rounded-md shadow-sm border border-slate-100 p-4 h-fit">
+      <div className="md:hidden -mx-1 mb-4">
+        <div className="flex gap-2 overflow-x-auto pb-2 px-1 scrollbar-thin">
+          {tabs.map((tab) => (
+            <button key={tab.id} type="button" onClick={() => setActiveTab(tab.id)} className={tabButtonClass(tab.id)}>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 min-w-0">
+        <div className="hidden md:block bg-white rounded-md shadow-sm border border-slate-100 p-3 sm:p-4 h-fit">
           <ul className="space-y-2">
-            <li>
-              <button
-                onClick={() => setActiveTab('orders')}
-                className={`w-full text-left px-4 py-3 rounded-sm font-bold uppercase text-sm ${
-                  activeTab === 'orders'
-                    ? 'bg-brand text-white shadow-sm'
-                    : 'text-slate-600 hover:bg-slate-50'
-                }`}
-              >
-                All Orders ({orders.length || '…'})
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => setActiveTab('products')}
-                className={`w-full text-left px-4 py-3 rounded-sm font-bold uppercase text-sm ${
-                  activeTab === 'products'
-                    ? 'bg-brand text-white shadow-sm'
-                    : 'text-slate-600 hover:bg-slate-50'
-                }`}
-              >
-                All Products ({products.length})
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => setActiveTab('add')}
-                className={`w-full text-left px-4 py-3 rounded-sm font-bold uppercase text-sm ${
-                  activeTab === 'add'
-                    ? 'bg-brand text-white shadow-sm'
-                    : 'text-slate-600 hover:bg-slate-50'
-                }`}
-              >
-                Add New Product
-              </button>
-            </li>
+            {tabs.map((tab) => (
+              <li key={tab.id}>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`w-full text-left px-4 py-3 rounded-sm font-bold uppercase text-sm ${
+                    activeTab === tab.id
+                      ? 'bg-brand text-white shadow-sm'
+                      : 'text-slate-600 hover:bg-slate-50'
+                  }`}
+                >
+                  {tab.id === 'orders' ? `All Orders (${orders.length || '…'})` : tab.id === 'products' ? `All Products (${products.length})` : 'Add New Product'}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
 
-        <div className="md:col-span-3">
+        <div className="md:col-span-3 min-w-0">
           {activeTab === 'orders' && (
             <div className="bg-white rounded-md shadow-sm border border-slate-100 overflow-hidden">
-              <div className="p-6 border-b border-slate-100 bg-slate-50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <h2 className="text-xl font-bold uppercase tracking-wide">Customer Orders</h2>
+              <div className="p-4 sm:p-6 border-b border-slate-100 bg-slate-50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <h2 className="text-lg sm:text-xl font-bold uppercase tracking-wide">Customer Orders</h2>
                 <button
                   onClick={fetchOrders}
                   disabled={ordersLoading}
@@ -375,7 +378,7 @@ const AdminDashboard = () => {
 
               {!ordersLoading && !ordersError && orders.length > 0 && (
                 <>
-                  <div className="hidden lg:block overflow-x-auto">
+                  <div className="hidden lg:block table-scroll">
                     <table className="w-full text-left border-collapse">
                       <thead>
                         <tr className="bg-slate-50 border-b border-slate-200">
@@ -467,11 +470,11 @@ const AdminDashboard = () => {
 
           {activeTab === 'add' && (
             <div className="bg-white rounded-md shadow-sm border border-slate-100">
-              <div className="p-6 border-b border-slate-100 bg-slate-50">
-                <h2 className="text-xl font-bold uppercase tracking-wide">Add New Product</h2>
+              <div className="p-4 sm:p-6 border-b border-slate-100 bg-slate-50">
+                <h2 className="text-lg sm:text-xl font-bold uppercase tracking-wide">Add New Product</h2>
               </div>
 
-              <form onSubmit={handleAddProduct} className="p-6 space-y-6">
+              <form onSubmit={handleAddProduct} className="p-4 sm:p-6 space-y-6">
                 <div>
                   <label className="block text-sm font-bold text-slate-700 uppercase mb-2">Product Name</label>
                   <input
@@ -512,11 +515,11 @@ const AdminDashboard = () => {
                   />
                 </div>
 
-                <div className="flex justify-end pt-4">
+                <div className="flex justify-stretch sm:justify-end pt-4">
                   <button
                     type="submit"
                     disabled={uploadingImage}
-                    className={`px-8 py-3 rounded-sm font-bold uppercase tracking-widest transition-all shadow-md ${
+                    className={`w-full sm:w-auto px-8 py-3 rounded-sm font-bold uppercase tracking-widest transition-all shadow-md ${
                       uploadingImage
                         ? 'bg-slate-400 cursor-not-allowed'
                         : 'bg-brand hover:bg-[#2b9690] text-white'
@@ -529,6 +532,7 @@ const AdminDashboard = () => {
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   );

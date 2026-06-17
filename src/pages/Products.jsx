@@ -29,14 +29,14 @@ const Products = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-app-bg pt-32 pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-black uppercase text-heading tracking-tight mb-4 text-center">
+    <div className="page-shell bg-app-bg">
+      <div className="page-container">
+        <div className="text-center mb-10 sm:mb-16">
+          <h1 className="section-heading mb-4 text-center">
             All Products
           </h1>
           <div className="w-24 h-1.5 bg-brand mx-auto rounded"></div>
-          <p className="mt-6 text-slate-600 max-w-2xl mx-auto text-lg">
+          <p className="mt-4 sm:mt-6 text-slate-600 max-w-2xl mx-auto text-base sm:text-lg px-2">
             Explore our complete catalog of industrial grade crane parts and premium tarpaulins.
           </p>
         </div>
@@ -64,17 +64,17 @@ const Products = () => {
             <p className="text-slate-400 text-sm mt-2">Check back soon for new inventory.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 min-w-0">
             {products.map((product) => {
               const outOfStock = isOutOfStock(product);
               return (
               <div
                 key={product._id}
-                className={`bg-white rounded-lg shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col group ${
+                className={`bg-white rounded-lg shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col group min-w-0 ${
                   outOfStock ? 'opacity-90' : ''
                 }`}
               >
-                <div className="relative h-56 overflow-hidden bg-slate-50 flex items-center justify-center p-4">
+                <div className="relative h-48 sm:h-56 overflow-hidden bg-slate-50 flex items-center justify-center p-4">
                   <img
                     src={getProductImage(product)}
                     alt={product.name}
@@ -91,14 +91,14 @@ const Products = () => {
                     </div>
                   )}
                 </div>
-                <div className="p-6 flex-grow flex flex-col">
-                  <ProtectedProductLink productId={product._id} className="block">
-                    <h3 className="text-lg font-bold text-heading mb-2 leading-tight hover:text-brand transition-colors">{product.name}</h3>
+                <div className="p-4 sm:p-6 flex-grow flex flex-col min-w-0">
+                  <ProtectedProductLink productId={product._id} className="block min-w-0">
+                    <h3 className="text-base sm:text-lg font-bold text-heading mb-2 leading-tight hover:text-brand transition-colors break-words">{product.name}</h3>
                   </ProtectedProductLink>
-                  <p className="text-slate-500 mb-6 text-sm flex-grow line-clamp-3">{product.description}</p>
+                  <p className="text-slate-500 mb-4 sm:mb-6 text-sm flex-grow line-clamp-3">{product.description}</p>
 
-                  <div className="mt-auto">
-                    <div className="text-2xl font-black text-slate-800 mb-4">{formatProductPrice(product)}</div>
+                  <div className="mt-auto min-w-0">
+                    <div className="text-xl sm:text-2xl font-black text-slate-800 mb-4 break-words">{formatProductPrice(product)}</div>
                     <ProductBuyButton product={product} fullWidth />
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 @theme {
   --color-brand: #3AAFA9;
@@ -10,7 +10,66 @@
   --color-app-bg: #FEFFFF;
 }
 
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--color-app-bg);
   color: #2d3748;
+  overflow-x: hidden;
+  min-width: 320px;
+}
+
+#root {
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent flex/grid children from forcing horizontal scroll */
+.min-w-0 {
+  min-width: 0;
+}
+
+/* Responsive table wrapper utility */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* Safe area for fixed navbar pages */
+.page-shell {
+  @apply min-h-screen w-full min-w-0 overflow-x-hidden pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16;
+}
+
+.page-container {
+  @apply max-w-7xl mx-auto w-full min-w-0 px-4 sm:px-6 lg:px-8;
+}
+
+.form-card {
+  @apply bg-white rounded-lg shadow-sm border border-slate-100 p-4 sm:p-6 md:p-8 w-full min-w-0;
+}
+
+.auth-shell {
+  @apply min-h-screen w-full min-w-0 overflow-x-hidden pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 flex items-center justify-center px-4 sm:px-6;
+}
+
+.modal-overlay {
+  @apply fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/50 backdrop-blur-sm;
+}
+
+.modal-panel {
+  @apply bg-white rounded-t-xl sm:rounded-lg shadow-xl border border-slate-100 w-full max-w-lg max-h-[92vh] sm:max-h-[90vh] overflow-y-auto min-w-0;
+}
+
+.section-heading {
+  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase text-heading tracking-tight;
 }

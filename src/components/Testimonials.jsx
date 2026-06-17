@@ -26,17 +26,17 @@ const reviews = [
 
 const Testimonials = () => {
   return (
-    <section className="w-full bg-section-light py-24 px-4 border-t border-slate-200">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-black uppercase text-heading tracking-tight mb-4">Trusted by Industries</h2>
+    <section className="w-full bg-section-light py-12 sm:py-16 md:py-24 px-4 sm:px-6 lg:px-8 border-t border-slate-200 min-w-0 overflow-x-hidden">
+      <div className="max-w-7xl mx-auto w-full min-w-0">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase text-heading tracking-tight mb-4">Trusted by Industries</h2>
           <div className="w-24 h-1.5 bg-brand mx-auto rounded"></div>
           <p className="mt-4 text-slate-600 max-w-2xl mx-auto">See what professionals across construction, ports, and logistics are saying about our products.</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 min-w-0">
           {reviews.map((review, index) => (
-            <div key={index} className="bg-white p-8 rounded-lg shadow-sm border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+            <div key={index} className="bg-white p-6 sm:p-8 rounded-lg shadow-sm border border-slate-100 hover:shadow-xl transition-shadow duration-300 min-w-0 flex flex-col">
               <div className="flex space-x-1 mb-6">
                 {[...Array(review.rating)].map((_, i) => (
                   <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
