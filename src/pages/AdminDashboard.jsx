@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAdminAuth } from '../context/AdminAuthContext';
+import { useAuth } from '../context/AuthContext';
 import { getProducts, getOrders, updateOrderStatus, createProduct } from '../services/apiService';
 import AdminProductManagement from '../components/AdminProductManagement';
 import AdminProductPricingFields from '../components/AdminProductPricingFields';
@@ -84,7 +84,7 @@ const OrderActions = ({ order, isUpdating, onStatusUpdate }) => (
 );
 
 const AdminDashboard = () => {
-  const { admin, adminLogout } = useAdminAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('orders');
   const [products, setProducts] = useState([]);
@@ -249,8 +249,8 @@ const AdminDashboard = () => {
   };
 
   const handleAdminLogout = () => {
-    adminLogout();
-    navigate('/login?redirect=/admin', { replace: true });
+    logout();
+    navigate('/login', { replace: true });
   };
 
   const pendingCount = orders.filter((o) => o.status === 'pending').length;
@@ -263,7 +263,7 @@ const AdminDashboard = () => {
             Admin Dashboard
           </h1>
           <p className="text-slate-500 mt-2">
-            Logged in as <span className="font-semibold text-heading">{admin?.email}</span>
+            Logged in as <span className="font-semibold text-heading">{user?.email}</span>
           </p>
         </div>
         <div className="flex flex-col items-start md:items-end gap-3">

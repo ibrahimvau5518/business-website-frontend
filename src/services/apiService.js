@@ -74,39 +74,22 @@ export const updateOrderStatus = async (orderId, status) => {
     }
 };
 
-export const adminLogin = async (credentials) => {
-    try {
-        const response = await api.post('/auth/login', credentials);
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-};
-
-// Auth examples (Login/Register)
 export const loginUser = async (credentials) => {
-    try {
-        const response = await api.post('/auth/login', credentials);
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    const response = await api.post('/auth/login', credentials);
+    return response.data;
 };
 
 export const registerUser = async (userData) => {
-    try {
-        const response = await api.post('/auth/register', userData);
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    const response = await api.post('/auth/register', userData);
+    return response.data;
 };
 
 export const googleLoginUser = async (tokenId) => {
-    try {
-        const response = await api.post('/auth/google', { token: tokenId });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+    const response = await api.post('/auth/google', { token: tokenId });
+    return response.data;
+};
+
+export const updateUserRole = async (userId, role) => {
+    const response = await api.patch(`/users/${userId}/role`, { role });
+    return response.data;
 };

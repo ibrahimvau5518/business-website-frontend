@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
-import { useAdminAuth } from '../context/AdminAuthContext';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -10,31 +9,42 @@ const Login = () => {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const { login, googleLogin } = useAuth();
-  const { adminLogin } = useAdminAuth();
+  const { login, googleLogin, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
 
   const isAdminLogin = searchParams.get('redirect') === '/admin' || location.state?.adminRequired;
   const redirectTo = searchParams.get('redirect') || location.state?.from?.pathname || '/';
+  const forbiddenAccess = searchParams.get('forbidden') === 'admin';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleGoogleSuccess = async () => {
-    if (isAdminLogin) {
-      toast.error('Please use admin email and password to access the dashboard.');
+  const redirectAfterLogin = async (authData) => {
+    if (authData.user.role === 'admin') {
+      toast.success('Admin login successful!');
+      navigate('/admin', { replace: true });
       return;
     }
 
+    if (isAdminLogin) {
+      await logout();
+      setError('You do not have admin access.');
+      return;
+    }
+
+    toast.success('Login successful!');
+    navigate(redirectTo);
+  };
+
+  const handleGoogleSuccess = async () => {
     try {
-      await googleLogin();
-      toast.success('Successfully logged in with Google!');
-      navigate(redirectTo);
+      const authData = await googleLogin();
+      await redirectAfterLogin(authData);
     } catch {
-      toast.error('Google Login Error.');
+      toast.error('Google login failed.');
     }
   };
 
@@ -44,15 +54,8 @@ const Login = () => {
     setError('');
 
     try {
-      if (isAdminLogin) {
-        await adminLogin(formData.email, formData.password);
-        toast.success('Admin login successful!');
-        navigate('/admin', { replace: true });
-      } else {
-        await login(formData.email, formData.password);
-        toast.success('Login Successful!');
-        navigate(redirectTo);
-      }
+      const authData = await login(formData.email, formData.password);
+      await redirectAfterLogin(authData);
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Invalid credentials.');
     } finally {
@@ -69,10 +72,16 @@ const Login = () => {
           </h1>
           <p className="text-slate-500">
             {isAdminLogin
-              ? 'Sign in with your admin credentials to manage orders'
+              ? 'Sign in with an admin account to manage orders and products'
               : 'Sign in to your account'}
           </p>
         </div>
+
+        {forbiddenAccess && (
+          <div className="bg-amber-50 text-amber-800 p-4 rounded-sm border border-amber-100 text-sm mb-6">
+            Admin access is required for that page.
+          </div>
+        )}
 
         {error && (
           <div className="bg-red-50 text-red-600 p-4 rounded-sm border border-red-100 text-sm mb-6">

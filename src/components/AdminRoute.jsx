@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAdminAuth } from '../context/AdminAuthContext';
+import { useAuth } from '../context/AuthContext';
 
 const AdminRoute = ({ children }) => {
-  const { admin, loading } = useAdminAuth();
+  const { user, loading } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -14,8 +14,12 @@ const AdminRoute = ({ children }) => {
     );
   }
 
-  if (!admin) {
+  if (!user) {
     return <Navigate to="/login?redirect=/admin" state={{ from: location, adminRequired: true }} replace />;
+  }
+
+  if (user.role !== 'admin') {
+    return <Navigate to="/" state={{ forbidden: 'admin' }} replace />;
   }
 
   return children;

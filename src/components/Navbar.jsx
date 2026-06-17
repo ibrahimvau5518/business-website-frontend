@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import { useAdminAuth } from '../context/AdminAuthContext';
 
 const navLinks = [
   { title: 'Home', path: '/' },
@@ -17,8 +16,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
-  const { admin, isAdminAuthenticated } = useAdminAuth();
+  const { user, logout, isAdmin } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,18 +75,16 @@ const Navbar = () => {
               </NavLink>
             ))}
             
-            {isAdminAuthenticated ? (
-              <div className="flex items-center space-x-4">
-                <NavLink to="/admin" className="text-sm font-bold uppercase tracking-wider text-brand hover:text-white transition-colors duration-200">
-                  Dashboard
-                </NavLink>
-                <span className={`text-sm font-bold ${isScrolled ? 'text-gray-200' : 'text-slate-800'}`}>
-                  Admin: {admin?.email?.split('@')[0]}
-                </span>
-              </div>
-            ) : user ? (
+            {user ? (
                <div className="flex items-center space-x-4">
-                 <span className={`text-sm font-bold ${isScrolled ? 'text-gray-200' : 'text-slate-800'}`}>Hi, {user.name?.split(' ')[0] || 'User'}</span>
+                 {isAdmin && (
+                   <NavLink to="/admin" className="text-sm font-bold uppercase tracking-wider text-brand hover:text-white transition-colors duration-200">
+                     Dashboard
+                   </NavLink>
+                 )}
+                 <span className={`text-sm font-bold ${isScrolled ? 'text-gray-200' : 'text-slate-800'}`}>
+                   Hi, {user.name?.split(' ')[0] || 'User'}
+                 </span>
                  <button onClick={() => { logout(); navigate('/'); }} className="bg-red-500 hover:bg-red-600 text-white px-6 py-2.5 rounded-sm font-bold uppercase text-sm tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 shadow-md hover:shadow-red-500/30">
                    Logout
                  </button>

@@ -10,9 +10,9 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const adminToken = localStorage.getItem('adminToken');
-    if (adminToken) {
-      config.headers.Authorization = `Bearer ${adminToken}`;
+    const token = localStorage.getItem('authToken') || localStorage.getItem('adminToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -23,14 +23,16 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     const status = error.response?.status;
-    const hadAdminToken = !!localStorage.getItem('adminToken');
+    const hadToken = !!(localStorage.getItem('authToken') || localStorage.getItem('adminToken'));
 
-    if ((status === 401 || status === 403) && hadAdminToken) {
+    if ((status === 401 || status === 403) && hadToken) {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('authUser');
       localStorage.removeItem('adminToken');
       localStorage.removeItem('adminUser');
 
       if (window.location.pathname.startsWith('/admin')) {
-        window.location.href = '/login?redirect=/admin';
+        window.location.href = status === 403 ? '/login?forbidden=admin' : '/login?redirect=/admin';
       }
     }
 
