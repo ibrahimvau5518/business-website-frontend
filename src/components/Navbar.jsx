@@ -75,10 +75,10 @@ const Navbar = () => {
   const brandTextClass = useLightText ? 'text-white' : 'text-slate-900';
 
   const navSurfaceClass = isSolidNav
-    ? 'bg-nav-bg/95 backdrop-blur-md shadow-lg py-2.5 sm:py-3 lg:py-4'
+    ? 'bg-nav-bg/95 backdrop-blur-md shadow-lg py-4 sm:py-5 lg:py-6'
     : isHome
-    ? 'bg-gradient-to-b from-black/50 via-black/20 to-transparent backdrop-blur-sm py-3 sm:py-4 lg:py-5'
-    : 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200/70 py-2.5 sm:py-3 lg:py-4';
+    ? 'bg-gradient-to-b from-black/50 via-black/20 to-transparent backdrop-blur-sm py-5 sm:py-6 lg:py-8'
+    : 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200/70 py-4 sm:py-5 lg:py-6';
 
   return (
     <>

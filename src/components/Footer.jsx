@@ -10,11 +10,15 @@ const Footer = () => {
           
           {/* Brand & About */}
           <div className="space-y-6">
-            <Link to="/" className="flex items-center gap-2 sm:gap-3 min-w-0">
-              <img src="https://i.ibb.co.com/WvftM2PT/0cf3a8dc-3aca-48a2-b51d-1419aa33f4a5.jpg" alt="Crane Parts & Tarpaulin Logo" className="h-10 sm:h-12 md:h-14 w-auto rounded-md shadow-sm flex-shrink-0" />
-              <div className="text-lg sm:text-xl md:text-2xl font-black tracking-tighter uppercase min-w-0 leading-tight">
-                <span className="text-white">Crane Parts &</span>
-                <span className="text-brand"> Tarpaulin</span>
+            <Link to="/" className="flex items-center gap-3 sm:gap-4 w-full">
+              <img 
+                src="https://i.ibb.co.com/WvftM2PT/0cf3a8dc-3aca-48a2-b51d-1419aa33f4a5.jpg" 
+                alt="Crane Parts & Tarpaulin Logo" 
+                className="h-16 w-16 sm:h-20 sm:w-20 rounded-xl shadow-md object-cover shrink-0" 
+              />
+              <div className="flex flex-col text-xl sm:text-2xl font-black tracking-tighter uppercase leading-tight min-w-0">
+                <span className="text-white truncate">Crane Parts</span>
+                <span className="text-brand truncate">& Tarpaulin</span>
               </div>
             </Link>
             <p className="text-sm leading-relaxed text-slate-400">
