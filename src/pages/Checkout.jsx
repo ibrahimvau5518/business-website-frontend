@@ -15,8 +15,14 @@ import {
   buildOrderPayload,
 } from '../utils/productHelpers';
 import OutOfStockBadge from '../components/OutOfStockBadge';
+import { CONTACT_INFO } from '../constants/contactInfo';
 
-const BKASH_NUMBER = import.meta.env.VITE_BKASH_NUMBER || '01827195518';
+const BKASH_NUMBERS = (
+  import.meta.env.VITE_BKASH_NUMBERS || CONTACT_INFO.bkashNumbers.join(',')
+)
+  .split(',')
+  .map((number) => number.trim())
+  .filter(Boolean);
 
 const Checkout = () => {
   const { productId } = useParams();
@@ -307,8 +313,14 @@ const Checkout = () => {
                 Send the exact amount via bKash Send Money, then enter your transaction ID below.
               </p>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-                <p className="text-white/70 text-xs font-bold uppercase tracking-widest mb-2">bKash Number</p>
-                <p className="text-2xl sm:text-3xl font-black tracking-wider break-all">{BKASH_NUMBER}</p>
+                <p className="text-white/70 text-xs font-bold uppercase tracking-widest mb-2">bKash Numbers</p>
+                <div className="space-y-2">
+                  {BKASH_NUMBERS.map((number) => (
+                    <p key={number} className="text-2xl sm:text-3xl font-black tracking-wider break-all">
+                      {number}
+                    </p>
+                  ))}
+                </div>
                 <p className="text-white/80 text-sm mt-4">
                   Amount to send: <span className="font-bold text-white">৳{totalPrice.toFixed(2)}</span>
                 </p>
@@ -320,7 +332,7 @@ const Checkout = () => {
                 </li>
                 <li className="flex gap-3">
                   <span className="font-bold text-white/60">2.</span>
-                  Enter the number above and send ৳{totalPrice.toFixed(2)}
+                  Enter one of the numbers above and send ৳{totalPrice.toFixed(2)}
                 </li>
                 <li className="flex gap-3">
                   <span className="font-bold text-white/60">3.</span>
